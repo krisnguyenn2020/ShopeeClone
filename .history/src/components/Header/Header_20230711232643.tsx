@@ -7,7 +7,7 @@ import { AppContext } from 'src/contexts/app.context'
 import path from 'src/constants/path'
 
 export default function Header() {
-  const { isAuthenticated, setIsAuthenticated, profile } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
@@ -91,7 +91,7 @@ export default function Header() {
                   className='h-full w-full rounded-full object-cover'
                 />
               </div>
-              <div>{profile?.email}</div>
+              <div>krisnguyenn</div>
             </Popover>
           )}
           {!isAuthenticated && (

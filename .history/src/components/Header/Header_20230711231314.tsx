@@ -7,7 +7,7 @@ import { AppContext } from 'src/contexts/app.context'
 import path from 'src/constants/path'
 
 export default function Header() {
-  const { isAuthenticated, setIsAuthenticated, profile } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
@@ -58,49 +58,47 @@ export default function Header() {
               <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
             </svg>
           </Popover>
-          {isAuthenticated && (
-            <Popover
-              className='ml-6 flex cursor-pointer items-center py-1 hover:text-gray-300'
-              renderPopover={
-                <div className='rounded-sm border border-gray-200 bg-white  shadow-md'>
-                  <Link
-                    to='/profile'
-                    className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
-                  >
-                    My account
-                  </Link>
-                  <Link
-                    to='/'
-                    className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
-                  >
-                    Orders
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
-                  >
-                    Logout
-                  </button>
-                </div>
-              }
-            >
-              <div className='mr-2 h-6 w-6 flex-shrink-0'>
-                <img
-                  src='https://scontent-iad3-1.xx.fbcdn.net/v/t39.30808-6/358638151_777784794031359_3989592857963780491_n.jpg?stp=dst-jpg_p843x403&_nc_cat=1&ccb=1-7&_nc_sid=730e14&_nc_ohc=DLogsfdOr5YAX9p6hKb&_nc_ht=scontent-iad3-1.xx&oh=00_AfBgV3k5AjT7cP-Z8hadwHsp0VgXeVlzAoplVvMygRfTcg&oe=64AEB1EF'
-                  alt='avatar'
-                  className='h-full w-full rounded-full object-cover'
-                />
+          <Popover
+            className='ml-6 flex cursor-pointer items-center py-1 hover:text-gray-300'
+            renderPopover={
+              <div className='rounded-sm border border-gray-200 bg-white  shadow-md'>
+                <Link
+                  to='/profile'
+                  className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                >
+                  My account
+                </Link>
+                <Link
+                  to='/'
+                  className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                >
+                  Orders
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className='block w-full bg-white px-4 py-3 text-left hover:bg-slate-100 hover:text-cyan-500'
+                >
+                  Logout
+                </button>
               </div>
-              <div>{profile?.email}</div>
-            </Popover>
-          )}
+            }
+          >
+            <div className='mr-2 h-6 w-6 flex-shrink-0'>
+              <img
+                src='https://scontent-iad3-1.xx.fbcdn.net/v/t39.30808-6/358638151_777784794031359_3989592857963780491_n.jpg?stp=dst-jpg_p843x403&_nc_cat=1&ccb=1-7&_nc_sid=730e14&_nc_ohc=DLogsfdOr5YAX9p6hKb&_nc_ht=scontent-iad3-1.xx&oh=00_AfBgV3k5AjT7cP-Z8hadwHsp0VgXeVlzAoplVvMygRfTcg&oe=64AEB1EF'
+                alt='avatar'
+                className='h-full w-full rounded-full object-cover'
+              />
+            </div>
+            <div>krisnguyenn</div>
+          </Popover>
           {!isAuthenticated && (
             <div className='flex items-center'>
               <Link to={path.register} className='mx-3 capitalize  '>
                 Register
               </Link>
               <div className='h-4 border-r-[1px] border-r-white/40'></div>
-              <Link to={path.login} className='mx-3 capitalize hover:text-white/70'>
+              <Link to='/login' className='mx-3 capitalize hover:text-white/70'>
                 Login
               </Link>
             </div>

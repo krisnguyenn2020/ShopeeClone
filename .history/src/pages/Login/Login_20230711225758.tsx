@@ -12,11 +12,10 @@ import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import authApi from '../../apis/auth.api'
 import Button from 'src/components/Button'
-import { set } from 'lodash'
 type FormData = Omit<Schema, 'confirm_password'>
 const loginSchema = schema.omit(['confirm_password'])
 export default function Login() {
-  const { setIsAuthenticated, setProfile } = useContext(AppContext)
+  const { setIsAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
   const {
     register,
@@ -32,8 +31,7 @@ export default function Login() {
   const onSubmit = handleSubmit((data) => {
     // console.log(data)
     loginMutation.mutate(data, {
-      onSuccess: (data) => {
-        setProfile(data.data.data.user)
+      onSuccess: () => {
         setIsAuthenticated(true)
         // setProfile(data.data.data.user)
         navigate('/')
@@ -81,8 +79,8 @@ export default function Login() {
               <div className='mt-3'>
                 <Button
                   type='submit'
-                  isLoading={loginMutation.isLoading}
-                  disabled={loginMutation.isLoading}
+                  isLoading
+                  disabled
                   className='mt-2 flex w-full items-center justify-center bg-red-500 px-2 py-4 text-center text-sm uppercase text-white'
                 >
                   Login

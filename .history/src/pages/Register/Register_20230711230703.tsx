@@ -12,7 +12,6 @@ import { ErrorResponse } from 'src/types/utils.type'
 import authApi from '../../apis/auth.api'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
-import Button from 'src/components/Button'
 // interface FormData {
 //   email: string
 //   password: string
@@ -20,7 +19,7 @@ import Button from 'src/components/Button'
 // }
 type FormData = Schema
 export default function Register() {
-  const { setIsAuthenticated, setProfile } = useContext(AppContext)
+  const { setIsAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
   const {
     register,
@@ -38,8 +37,7 @@ export default function Register() {
   const onSubmit = handleSubmit((data) => {
     const body = omit(data, ['confirm_password'])
     registerAccountMutation.mutate(body, {
-      onSuccess: (data) => {
-        setProfile(data.data.data.user)
+      onSuccess: () => {
         setIsAuthenticated(true)
         navigate('/')
         // console.log(data)
@@ -107,8 +105,8 @@ export default function Register() {
               <div className='mt-2'>
                 <Button
                   type='submit'
-                  isLoading={registerAccountMutation.isLoading}
-                  disabled={registerAccountMutation.isLoading}
+                  isLoading={loginMutation.isLoading}
+                  disabled={loginMutation.isLoading}
                   className='mt-2 flex w-full items-center justify-center bg-red-500 px-2 py-4 text-center text-sm uppercase text-white'
                 >
                   Register
