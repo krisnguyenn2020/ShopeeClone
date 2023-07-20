@@ -2,14 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 import AsideFilter from './AsideFilter'
 import Product from './Product'
 import SortProductList from './SortProductList/'
+import { get } from 'lodash'
 import useQueryParams from 'src/hooks/useQueryParams'
 import productApi from 'src/apis/product.api'
-import Pagination from 'src/components/Pagination'
-import { useState } from 'react'
 
 export default function ProductList() {
   const queryParams = useQueryParams()
-  const [page, setPage] = useState(1)
   // console.log(queryParams)
   const { data } = useQuery({
     queryKey: ['products', queryParams],
@@ -27,14 +25,13 @@ export default function ProductList() {
           </div>
           <div className='col-span-9'>
             <SortProductList />
-            <div className='cols-2 mt-6 grid gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+            <div className='cols-2 mt-6 grid grid gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
               {data?.data.data.products.map((product) => (
                 <div className='col-span-1' key={product._id}>
                   <Product product={product} />
                 </div>
               ))}
             </div>
-            <Pagination page={page} setPage={setPage} pageSize={20} />
           </div>
         </div>
       </div>

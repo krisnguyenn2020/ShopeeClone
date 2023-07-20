@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import ProductRating from 'src/components/ProductRating'
 import { Product as ProductType } from 'src/types/product.type'
 import { formatNumberToSocialStyle, formatCurrency } from 'src/utils/utils'
 
@@ -33,8 +32,7 @@ export default function Product({ product }: Props) {
             </div>
           </div>
           <div className='mt-3 flex items-center justify-end'>
-            <ProductRating rating={product.rating}></ProductRating>
-
+            <div className='flex items-center'></div>
             <div className='ml-2 text-sm'>
               <span>{formatNumberToSocialStyle(product.sold)}</span>
               <span className='ml-1'>Sold</span>
