@@ -1,10 +1,10 @@
-import { AuthResponse } from "./auth.type";
+import { AuthResponse } from './auth.type'
 
 export interface SuccessResponse<Data> {
-  message: string;
+  message: string
   data: Data
 }
 export interface ErrorResponse<Data> {
-  message: string;
+  message: string
   data?: Data
 }

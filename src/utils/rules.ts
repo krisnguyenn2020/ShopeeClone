@@ -76,5 +76,4 @@ export const schema = yup.object({
     .oneOf([yup.ref('password'), ''], 'Confirm password does not match')
 })
 
-
 export type Schema = yup.InferType<typeof schema>
