@@ -73,7 +73,7 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
   return (
     <div className='mt-6 flex flex-wrap justify-center'>
       {page === 1 ? (
-        <span className='mx-2 cursor-not-allowed rounded border bg-white/60 px-3 py-2 shadow-sm'>Prev</span>
+        <span className='mx-2 cursor-not-allowed rounded border bg-white px-3 py-2 shadow-sm'>Prev</span>
       ) : (
         <Link
           to={{
@@ -82,24 +82,12 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
           }}
           className='mx-2 cursor-pointer rounded border bg-white px-3 py-2 shadow-sm'
         >
-          Prev
+          Next
         </Link>
       )}
 
       {renderPagination()}
-      {page === pageSize ? (
-        <span className='mx-2 cursor-not-allowed rounded border bg-white/60 px-3 py-2 shadow-sm'>Next</span>
-      ) : (
-        <Link
-          to={{
-            pathname: path.home,
-            search: createSearchParams({ ...queryConfig, page: (page + 1).toString() }).toString()
-          }}
-          className='mx-2 cursor-pointer rounded border bg-white px-3 py-2 shadow-sm'
-        >
-          Next
-        </Link>
-      )}
+      <button className='mx-2 cursor-pointer rounded border bg-white px-3 py-2 shadow-sm'>Next</button>
     </div>
   )
 }

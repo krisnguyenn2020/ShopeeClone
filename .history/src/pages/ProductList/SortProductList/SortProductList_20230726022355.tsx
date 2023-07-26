@@ -2,10 +2,9 @@ import classNames from 'classnames'
 import { sortBy, order as orderConstant } from 'src/constants/product'
 import { ProductListConfig } from 'src/types/product.type'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
-
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 import path from 'src/constants/path'
 import omit from 'lodash/omit'
-import { QueryConfig } from '../ProductList'
 interface Props {
   queryConfig: QueryConfig
   pageSize: number
@@ -13,7 +12,7 @@ interface Props {
 
 export default function SortProductList({ queryConfig, pageSize }: Props) {
   const page = Number(queryConfig.page)
-  const { sort_by = sortBy.createdAt, order } = queryConfig
+  const { sort_by = sortBy.createAt, order } = queryConfig
   const navigate = useNavigate()
 
   const isActiveSortBy = (sortByValue: Exclude<ProductListConfig['sort_by'], undefined>) => {
@@ -58,7 +57,7 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             })}
             onClick={() => handleSort(sortBy.view)}
           >
-            Popular
+            Phổ biến
           </button>
           <button
             className={classNames('h-8 px-4 text-center text-sm capitalize ', {
@@ -67,7 +66,7 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             })}
             onClick={() => handleSort(sortBy.createdAt)}
           >
-            Newest
+            Mới nhất
           </button>
           <button
             className={classNames('h-8 px-4 text-center text-sm capitalize ', {
@@ -76,7 +75,7 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             })}
             onClick={() => handleSort(sortBy.sold)}
           >
-            Best Seller
+            Bán chạy
           </button>
           <select
             className={classNames('h-8  px-4 text-left text-sm capitalize  outline-none ', {
@@ -87,13 +86,13 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             onChange={(event) => handlePriceOrder(event.target.value as Exclude<ProductListConfig['order'], undefined>)}
           >
             <option value='' disabled className='bg-white text-black'>
-              Price
+              Giá
             </option>
             <option value={orderConstant.asc} className='bg-white text-black'>
-              Price: Low to High
+              Giá: Thấp đến cao
             </option>
             <option value={orderConstant.desc} className='bg-white text-black'>
-              Price: High to Low
+              Giá: Cao đến thấp
             </option>
           </select>
         </div>

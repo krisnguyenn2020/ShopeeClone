@@ -73,7 +73,7 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
   return (
     <div className='mt-6 flex flex-wrap justify-center'>
       {page === 1 ? (
-        <span className='mx-2 cursor-not-allowed rounded border bg-white/60 px-3 py-2 shadow-sm'>Prev</span>
+        <span className='mx-2 cursor-not-allowed rounded border bg-white px-3 py-2 shadow-sm'>Prev</span>
       ) : (
         <Link
           to={{
@@ -88,7 +88,7 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
 
       {renderPagination()}
       {page === pageSize ? (
-        <span className='mx-2 cursor-not-allowed rounded border bg-white/60 px-3 py-2 shadow-sm'>Next</span>
+        <span className='mx-2 cursor-not-allowed rounded border bg-white px-3 py-2 shadow-sm'>Next</span>
       ) : (
         <Link
           to={{

@@ -87,13 +87,13 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             onChange={(event) => handlePriceOrder(event.target.value as Exclude<ProductListConfig['order'], undefined>)}
           >
             <option value='' disabled className='bg-white text-black'>
-              Price
+              Giá
             </option>
             <option value={orderConstant.asc} className='bg-white text-black'>
-              Price: Low to High
+              Giá: Thấp đến cao
             </option>
             <option value={orderConstant.desc} className='bg-white text-black'>
-              Price: High to Low
+              Giá: Cao đến thấp
             </option>
           </select>
         </div>
