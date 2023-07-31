@@ -16,7 +16,7 @@ export type QueryConfig = {
 export default function ProductList() {
   const queryParams = useQueryParams()
 
-  // console.log(queryParams)
+  console.log(queryParams)
   const queryConfig: QueryConfig = omitBy(
     {
       page: queryParams.page || '1',
@@ -27,12 +27,11 @@ export default function ProductList() {
       name: queryParams.name,
       price_max: queryParams.price_max,
       price_min: queryParams.price_min,
-      rating_filter: queryParams.rating_filter,
-      category: queryParams.category
+      rating_filter: queryParams.rating_filter
     },
     isUndefined
   )
-  // console.log('🚀 ~ file: ProductList.tsx:28 ~ ProductList ~ queryConfig:', queryConfig)
+  console.log('🚀 ~ file: ProductList.tsx:28 ~ ProductList ~ queryConfig:', queryConfig)
 
   // console.log(queryParams)
   const { data: productsData } = useQuery({
@@ -46,16 +45,16 @@ export default function ProductList() {
     queryKey: ['categories'],
     queryFn: () => {
       return categoryApi.getCategories()
-    }
+    },
+    keepPreviousData: true
   })
-  console.log(categoriesData)
   return (
     <div className='bg-gray-200 py-6'>
       <div className='container'>
         {productsData && (
           <div className='grid grid-cols-12 gap-6'>
             <div className='col-span-3'>
-              <AsideFilter queryConfig={queryConfig} categories={categoriesData?.data.data || []} />
+              <AsideFilter />
             </div>
             <div className='col-span-9'>
               <SortProductList queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />

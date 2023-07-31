@@ -8,7 +8,6 @@ import Pagination from 'src/components/Pagination'
 
 import { ProductListConfig } from 'src/types/product.type'
 import { isUndefined, omitBy } from 'lodash'
-import categoryApi from 'src/apis/category.api'
 export type QueryConfig = {
   [key in keyof ProductListConfig]?: string
 }
@@ -16,7 +15,7 @@ export type QueryConfig = {
 export default function ProductList() {
   const queryParams = useQueryParams()
 
-  // console.log(queryParams)
+  console.log(queryParams)
   const queryConfig: QueryConfig = omitBy(
     {
       page: queryParams.page || '1',
@@ -27,46 +26,45 @@ export default function ProductList() {
       name: queryParams.name,
       price_max: queryParams.price_max,
       price_min: queryParams.price_min,
-      rating_filter: queryParams.rating_filter,
-      category: queryParams.category
+      rating_filter: queryParams.rating_filter
     },
     isUndefined
   )
-  // console.log('🚀 ~ file: ProductList.tsx:28 ~ ProductList ~ queryConfig:', queryConfig)
+  console.log('🚀 ~ file: ProductList.tsx:28 ~ ProductList ~ queryConfig:', queryConfig)
 
   // console.log(queryParams)
-  const { data: productsData } = useQuery({
+  const { data: productData } = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => {
       return productApi.getProducts(queryConfig as ProductListConfig)
     },
     keepPreviousData: true
   })
-  const { data: categoriesData } = useQuery({
-    queryKey: ['categories'],
+  const { data } = useQuery({
+    queryKey: ['products', queryConfig],
     queryFn: () => {
-      return categoryApi.getCategories()
-    }
+      return productApi.getProducts(queryConfig as ProductListConfig)
+    },
+    keepPreviousData: true
   })
-  console.log(categoriesData)
   return (
     <div className='bg-gray-200 py-6'>
       <div className='container'>
-        {productsData && (
+        {data && (
           <div className='grid grid-cols-12 gap-6'>
             <div className='col-span-3'>
-              <AsideFilter queryConfig={queryConfig} categories={categoriesData?.data.data || []} />
+              <AsideFilter />
             </div>
             <div className='col-span-9'>
-              <SortProductList queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
+              <SortProductList queryConfig={queryConfig} pageSize={data.data.data.pagination.page_size} />
               <div className='cols-2 mt-6 grid gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
-                {productsData?.data.data.products.map((product) => (
+                {data?.data.data.products.map((product) => (
                   <div className='col-span-1' key={product._id}>
                     <Product product={product} />
                   </div>
                 ))}
               </div>
-              <Pagination queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
+              <Pagination queryConfig={queryConfig} pageSize={data.data.data.pagination.page_size} />
             </div>
           </div>
         )}

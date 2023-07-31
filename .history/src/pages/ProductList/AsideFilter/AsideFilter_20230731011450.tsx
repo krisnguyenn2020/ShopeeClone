@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import classNames from 'classnames'
 import React from 'react'
-import { Link, createSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import path from 'src/constants/path'
@@ -18,12 +18,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
   console.log(category, categories)
   return (
     <div className='py-4'>
-      <Link
-        to={path.home}
-        className={classNames('flex items-center font-bold', {
-          'text-orange': !category
-        })}
-      >
+      <Link to={path.home} className='flex items-center font-bold'>
         <svg viewBox='0 0 12 10' className='h4 mr-3 w-3 fill-current'>
           <g fillRule='evenodd' stroke='none' strokeWidth='1'>
             <g transform='translate(-373 -208)'>
@@ -42,24 +37,22 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       <div className='my-4 h-[1px] bg-gray-300'>
         <ul>
           {categories.map((categoryItem) => {
-            const isActive = categoryItem._id === category
             return (
               <li className='p-2 pl-2' key={categoryItem._id}>
                 <Link
-                  to={{
-                    pathname: path.home,
-                    search: createSearchParams({ ...queryConfig, category: categoryItem._id }).toString()
-                  }}
-                  className={classNames('relative px-2', {
-                    'font-semibold text-orange': isActive
-                  })}
+                  to={path.home}
+                  className={
+                    (classNames =
+                      ('relative px-2  ',
+                      {
+                        'font-semibold text-orange': isActive
+                      }))
+                  }
                 >
-                  {isActive && (
-                    <svg viewBox='0 0 4 7' className='absolute left-[-10px] top-1 h-2 w-2 fill-orange'>
-                      <polygon points='4 3.5 0 0 0 7' />
-                    </svg>
-                  )}
-                  {categoryItem.name}
+                  <svg viewBox='0 0 4 7' className='absolute left-[-10px] top-1 h-2 w-2 fill-orange'>
+                    <polygon points='4 3.5 0 0 0 7' />
+                  </svg>
+                  Men Fashion
                 </Link>
               </li>
             )

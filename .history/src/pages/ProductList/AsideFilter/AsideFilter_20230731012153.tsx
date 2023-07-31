@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import classNames from 'classnames'
 import React from 'react'
-import { Link, createSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import path from 'src/constants/path'
@@ -18,12 +18,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
   console.log(category, categories)
   return (
     <div className='py-4'>
-      <Link
-        to={path.home}
-        className={classNames('flex items-center font-bold', {
-          'text-orange': !category
-        })}
-      >
+      <Link to={path.home} className='flex items-center font-bold'>
         <svg viewBox='0 0 12 10' className='h4 mr-3 w-3 fill-current'>
           <g fillRule='evenodd' stroke='none' strokeWidth='1'>
             <g transform='translate(-373 -208)'>
@@ -46,10 +41,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
             return (
               <li className='p-2 pl-2' key={categoryItem._id}>
                 <Link
-                  to={{
-                    pathname: path.home,
-                    search: createSearchParams({ ...queryConfig, category: categoryItem._id }).toString()
-                  }}
+                  to={path.home}
                   className={classNames('relative px-2', {
                     'font-semibold text-orange': isActive
                   })}
