@@ -11,12 +11,11 @@ export default function Header() {
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
-      console.log('logout success')
       setIsAuthenticated(false)
     }
   })
-  const handleLogout = () => {
-    logoutMutation.mutate()
+  const handleLogout = async () => {
+    await logoutMutation.mutate()
   }
   return (
     <div className='bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white'>
