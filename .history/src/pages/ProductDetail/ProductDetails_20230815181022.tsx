@@ -162,7 +162,7 @@ export default function ProductDetails() {
                   </svg>
                   Add to cart
                 </button>
-                 <button className='ml-4 flex h-12 min-w-[5rem] items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90'>Buy Now</button>
+                 
               </div>
             </div>
           </div>
