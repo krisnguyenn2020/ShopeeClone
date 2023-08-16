@@ -24,19 +24,18 @@ export default function ProductDetails() {
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
   const product = productDetailData?.data.data
-  const currentImages = useMemo(() => (product ? product.images.slice(...currentIndexImages) : []), [product, currentIndexImages])
+  const currentImages = useMemo(() => (product ? product.images.slice(...currentIndexImages) : []), [product])
 
   useEffect(() => {
     // check if product has images
     if (product && product.images.length > 0) {
       setActiveImage(product.images[0])
     }
-  }, [product])
+  }, [product, currentIndexImages])
   const chooseActive = (img:string) => setActiveImage(img)
   const next = () => {
-    
+    console.log(1111)
     if(currentIndexImages[1] < (product as Product).images.length) {
-      console.log(1111)
       setCurrentIndexImages(prev => [prev[0] + 1, prev[1] + 1])
     }
   }

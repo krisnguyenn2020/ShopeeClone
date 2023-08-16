@@ -24,23 +24,19 @@ export default function ProductDetails() {
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
   const product = productDetailData?.data.data
-  const currentImages = useMemo(() => (product ? product.images.slice(...currentIndexImages) : []), [product, currentIndexImages])
+  const currentImages = useMemo(() => (product ? product.images.slice(...currentIndexImages) : []), [product])
 
   useEffect(() => {
     // check if product has images
     if (product && product.images.length > 0) {
       setActiveImage(product.images[0])
     }
-  }, [product])
+  }, [product, currentIndexImages])
   const chooseActive = (img:string) => setActiveImage(img)
   const next = () => {
-    
     if(currentIndexImages[1] < (product as Product).images.length) {
-      console.log(1111)
       setCurrentIndexImages(prev => [prev[0] + 1, prev[1] + 1])
-    }
-  }
-
+  }}
   const prev = () => {
     if(currentIndexImages[0]> 0) {
       setCurrentIndexImages(prev => [prev[0]-1, prev[1]-1])
@@ -63,7 +59,7 @@ export default function ProductDetails() {
                 />
               </div>
               <div className='relative mt-4 grid grid-cols-5 gap-1'>
-                <button onClick={prev} className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
+                <button className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -89,7 +85,7 @@ export default function ProductDetails() {
                     </div>
                   )
                 })}
-                <button onClick={next}  className='absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
+                <button className='absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -148,7 +144,7 @@ export default function ProductDetails() {
                     classNameError='hidden'
                     classNameInput='h8 w-14 border-t border-b border-gray-30 p-1 text-center outline-none'
                   />
-                  <button className='flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600'>
+                  <button onClick={ prev} className='flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       fill='none'
@@ -164,7 +160,7 @@ export default function ProductDetails() {
                 <div className='ml-6 text-sm text-gray-500'>{product.quantity} items available</div>
               </div>
               <div className='mt-8 flex items-center'>
-                <button  className='flex h-12 items-center justify-center rounded-sm border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'>
+                <button onClick={next} className='flex h-12 items-center justify-center rounded-sm border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'>
                   <svg
                     enableBackground='new 0 0 15 15'
                     viewBox='0 0 15 15'

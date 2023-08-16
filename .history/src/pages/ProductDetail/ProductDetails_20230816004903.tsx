@@ -2,53 +2,42 @@ import { useQuery } from '@tanstack/react-query'
 
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
-
+import Product from '../ProductList/components/Product'
 import ProductRating from 'src/components/ProductRating'
 import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/utils'
 // import { classNames } from 'classnames'
 import InputNumber from 'src/components/InputNumber'
 import DOMPurify from 'dompurify'
 import { useEffect, useMemo, useState } from 'react'
-import { Product } from 'src/types/product.type'
-
 
 export default function ProductDetails() {
   const { nameId } = useParams()
-  // console.log(nameId)
+  console.log(nameId)
   const { data: productDetailData } = useQuery({
     queryKey: ['product', nameId],
     queryFn: () => {
       return productApi.getProductDetail(nameId as string)
     }
   })
+ const product = productDetailData?.data.data
+
+  const currentImages = useMemo(() => (product ? product.images.slice(...currentIndexImages) : []), [product])
+
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
-  const product = productDetailData?.data.data
-  const currentImages = useMemo(() => (product ? product.images.slice(...currentIndexImages) : []), [product, currentIndexImages])
 
-  useEffect(() => {
-    // check if product has images
-    if (product && product.images.length > 0) {
-      setActiveImage(product.images[0])
-    }
-  }, [product])
-  const chooseActive = (img:string) => setActiveImage(img)
-  const next = () => {
-    
-    if(currentIndexImages[1] < (product as Product).images.length) {
-      console.log(1111)
-      setCurrentIndexImages(prev => [prev[0] + 1, prev[1] + 1])
-    }
-  }
 
-  const prev = () => {
-    if(currentIndexImages[0]> 0) {
-      setCurrentIndexImages(prev => [prev[0]-1, prev[1]-1])
-    }
-  }
+
+   useEffect(() => {
+     // check if product has images
+     if (product && product.images.length > 0) {
+       setActiveImage(product.images[0])
+     }
+   }, [product])
+   console.log(product)
+
   if (!product) return null
-  // Print product
-  // console.log(product)
+
   return (
     <div className='bg-gray-200 py-6'>
       <div className='container'>
@@ -63,7 +52,7 @@ export default function ProductDetails() {
                 />
               </div>
               <div className='relative mt-4 grid grid-cols-5 gap-1'>
-                <button onClick={prev} className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
+                <button className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -75,11 +64,11 @@ export default function ProductDetails() {
                     <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5L8.25 12l7.5-7.5' />
                   </svg>
                 </button>
-                {currentImages.map((img) => {
-                  const isActive = img === activeImage
+                {currentImages.map((img, index) => {
+                  const isActive = index === 0
 
                   return (
-                    <div className='relative w-full pt-[100%]' key={img} onMouseEnter={() => chooseActive(img)}>
+                    <div className='relative w-full pt-[100%]' key={img}>
                       <img
                         src={img}
                         alt={product.name}
@@ -89,7 +78,7 @@ export default function ProductDetails() {
                     </div>
                   )
                 })}
-                <button onClick={next}  className='absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
+                <button className='absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -164,7 +153,7 @@ export default function ProductDetails() {
                 <div className='ml-6 text-sm text-gray-500'>{product.quantity} items available</div>
               </div>
               <div className='mt-8 flex items-center'>
-                <button  className='flex h-12 items-center justify-center rounded-sm border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'>
+                <button className='flex h-12 items-center justify-center rounded-sm border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'>
                   <svg
                     enableBackground='new 0 0 15 15'
                     viewBox='0 0 15 15'
@@ -209,4 +198,4 @@ export default function ProductDetails() {
       </div>
     </div>
   )
-  }
+}
